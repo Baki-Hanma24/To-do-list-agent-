@@ -5,13 +5,36 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Pile, Task } from "@/db/schema";
 import { PILES } from "@/db/enums";
 import { AREA_INFO, PILE_INFO, STATUS_INFO, cx, formatDue } from "@/lib/ui";
+import AgentsPanel from "./AgentsPanel";
 
-export type BoardTask = Task & { awaiting: number; stepsTotal: number; stepsDone: number };
+export type BoardTask = Task & { awaiting: number; stepsTotal: number; stepsDone: number; lastEvent: string };
+
+const BATCH_KEY = "todo-agent:batch";
+
+function readBatch(): number[] {
+  try {
+    return JSON.parse(localStorage.getItem(BATCH_KEY) ?? "[]");
+  } catch {
+    return [];
+  }
+}
+function writeBatch(ids: number[]) {
+  try {
+    localStorage.setItem(BATCH_KEY, JSON.stringify(ids));
+  } catch {
+    /* private mode: the panel just won't survive a reload */
+  }
+}
 
 export default function Board({ brand, headerRight }: { brand: React.ReactNode; headerRight?: React.ReactNode }) {
   const [tasks, setTasks] = useState<BoardTask[] | null>(null);
   const [tab, setTab] = useState<Pile>("agent");
   const [showDone, setShowDone] = useState(false);
+  const [batch, setBatch] = useState<number[]>([]);
+  const [runningAll, setRunningAll] = useState(false);
+  const [runError, setRunError] = useState("");
+
+  useEffect(() => setBatch(readBatch()), []);
 
   const load = useCallback(async () => {
     const res = await fetch("/api/tasks", { cache: "no-store" });
@@ -43,6 +66,38 @@ export default function Board({ brand, headerRight }: { brand: React.ReactNode; 
 
   const doneCount = (tasks ?? []).filter((t) => t.status === "done").length;
 
+  // Tasks a sub-agent could start on right now.
+  const runnable = (tasks ?? []).filter((t) => t.pile !== "mine" && t.status === "todo" && t.awaiting === 0);
+
+  // The panel shows this batch, plus anything else currently being worked on.
+  const panelTasks = useMemo(() => {
+    const ids = new Set(batch);
+    return (tasks ?? [])
+      .filter((t) => ids.has(t.id) || t.status === "working")
+      .sort((a, b) => a.id - b.id);
+  }, [tasks, batch]);
+
+  async function runAll() {
+    setRunningAll(true);
+    setRunError("");
+    const res = await fetch("/api/runs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }),
+    });
+    setRunningAll(false);
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) return setRunError(json.error ?? "Couldn't start the agents.");
+    setBatch(json.ids);
+    writeBatch(json.ids);
+    await load();
+  }
+
+  function clearBatch() {
+    setBatch([]);
+    writeBatch([]);
+  }
+
   async function toggleDone(t: BoardTask) {
     const status = t.status === "done" ? "todo" : "done";
     setTasks((prev) => prev?.map((x) => (x.id === t.id ? { ...x, status } : x)) ?? null);
@@ -73,10 +128,29 @@ export default function Board({ brand, headerRight }: { brand: React.ReactNode; 
 
       <AddTask
         onAdded={(t) => {
-          setTasks((prev) => [{ ...t, awaiting: 0, stepsTotal: 0, stepsDone: 0 }, ...(prev ?? [])]);
+          setTasks((prev) => [{ ...t, awaiting: 0, stepsTotal: 0, stepsDone: 0, lastEvent: "" }, ...(prev ?? [])]);
           setTab(t.pile);
         }}
       />
+
+      {runnable.length > 0 && (
+        <div className="mt-5 flex flex-wrap items-center gap-3 rounded-[24px] bg-accent-soft p-3 pl-5">
+          <p className="min-w-0 flex-1 font-medium">
+            <span className="font-bold">{runnable.length}</span> task{runnable.length === 1 ? "" : "s"} the agents can start on
+          </p>
+          <button
+            onClick={runAll}
+            disabled={runningAll}
+            data-testid="run-all"
+            className="h-14 rounded-2xl bg-accent px-6 text-lg font-semibold text-accent-ink shadow-card transition hover:opacity-90 active:scale-[0.98] disabled:opacity-50"
+          >
+            {runningAll ? "Starting…" : `✨ Run all ${Math.min(runnable.length, 8)}`}
+          </button>
+          {runError && <p className="basis-full text-danger">{runError}</p>}
+        </div>
+      )}
+
+      {panelTasks.length > 0 && <AgentsPanel tasks={panelTasks} onClear={clearBatch} />}
 
       {/* Phone: tabs */}
       <div className="mt-8 grid grid-cols-3 gap-2 rounded-2xl bg-surface-2 p-1.5 md:hidden" role="tablist">

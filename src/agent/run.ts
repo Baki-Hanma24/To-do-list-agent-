@@ -18,6 +18,8 @@ export interface RunOptions {
   maxIterations?: number;
   /** Stop and let the user continue before the hosting time limit hits. */
   timeBudgetMs?: number;
+  /** Problems the checker agent found on a previous pass. */
+  feedback?: string[];
 }
 
 const WEB_SEARCH: Beta.BetaWebSearchTool20260209 = {
@@ -45,7 +47,7 @@ function describeServerTool(block: Beta.BetaContentBlock): string | null {
   return null;
 }
 
-async function buildKickoff(db: DB, taskId: number, timeZone: string): Promise<string> {
+async function buildKickoff(db: DB, taskId: number, timeZone: string, feedback?: string[]): Promise<string> {
   const [task] = await db.select().from(schema.tasks).where(eq(schema.tasks.id, taskId));
   const steps = await db
     .select()
@@ -73,6 +75,13 @@ async function buildKickoff(db: DB, taskId: number, timeZone: string): Promise<s
       ...steps.map((s) => `${s.position}. [${s.status}] ${s.text}${s.note ? ` (${s.note})` : ""}`),
     );
   }
+  if (feedback?.length) {
+    lines.push(
+      "",
+      "A separate checker agent reviewed your work and found these problems. Fix every one (update or add steps and documents as needed), then call finish again:",
+      ...feedback.map((f) => `- ${f}`),
+    );
+  }
   return lines.filter((l) => l !== "").join("\n");
 }
 
@@ -82,6 +91,16 @@ async function buildKickoff(db: DB, taskId: number, timeZone: string): Promise<s
  * run that stops early (time limit) can pick up where it left off.
  */
 export async function runAgent(opts: RunOptions): Promise<TaskStatus> {
+  return (await runAgentDetailed(opts)).status;
+}
+
+export interface RunResult {
+  status: TaskStatus;
+  /** True when the agent called finish (so there is finished work to check). */
+  finished: boolean;
+}
+
+export async function runAgentDetailed(opts: RunOptions): Promise<RunResult> {
   const { db, taskId } = opts;
   const timeZone = opts.timeZone || "UTC";
   const create: CreateFn = opts.create ?? ((p) => anthropic().beta.messages.create(p));
@@ -90,10 +109,10 @@ export async function runAgent(opts: RunOptions): Promise<TaskStatus> {
 
   const ctx: ToolContext = { db, taskId, finishRejections: 0 };
   await setStatus(db, taskId, "working");
-  await logEvent(db, taskId, "thought", "Starting work");
+  await logEvent(db, taskId, "thought", opts.feedback?.length ? "Fixing what the checker found" : "Starting work");
 
   const messages: Beta.BetaMessageParam[] = [
-    { role: "user", content: await buildKickoff(db, taskId, timeZone) },
+    { role: "user", content: await buildKickoff(db, taskId, timeZone, opts.feedback) },
   ];
 
   try {
@@ -101,7 +120,7 @@ export async function runAgent(opts: RunOptions): Promise<TaskStatus> {
       if (Date.now() > deadline) {
         await logEvent(db, taskId, "thought", "Paused to stay within the time limit. Tap “Keep going” to continue.");
         await setStatus(db, taskId, "todo");
-        return "todo";
+        return { status: "todo", finished: false };
       }
 
       const response = await create({
@@ -119,7 +138,7 @@ export async function runAgent(opts: RunOptions): Promise<TaskStatus> {
       if (response.stop_reason === "refusal") {
         await logEvent(db, taskId, "error", "Claude declined this task. Try rewording it.");
         await setStatus(db, taskId, "needs_you", "Claude declined this task. Try rewording it.");
-        return "needs_you";
+        return { status: "needs_you", finished: false };
       }
 
       // Append the assistant turn unchanged (thinking blocks included).
@@ -158,7 +177,7 @@ export async function runAgent(opts: RunOptions): Promise<TaskStatus> {
     const msg = err instanceof Error ? err.message : String(err);
     await logEvent(db, taskId, "error", `Stopped: ${msg}`);
     await setStatus(db, taskId, "needs_you", "Something went wrong. Tap “Keep going” to retry.");
-    return "needs_you";
+    return { status: "needs_you", finished: false };
   }
 
   const [task] = await db.select().from(schema.tasks).where(eq(schema.tasks.id, taskId));
@@ -168,7 +187,7 @@ export async function runAgent(opts: RunOptions): Promise<TaskStatus> {
   if (!fin) {
     await logEvent(db, taskId, "check", "Ran out of steps before finishing. Tap “Keep going” to continue.");
     await setStatus(db, taskId, "todo");
-    return "todo";
+    return { status: "todo", finished: false };
   }
 
   for (const c of fin.checks) {
@@ -178,5 +197,5 @@ export async function runAgent(opts: RunOptions): Promise<TaskStatus> {
   const status: TaskStatus =
     waiting || fin.outcome === "needs_you" || task.pile === "together" ? "needs_you" : "done";
   await setStatus(db, taskId, status, fin.summary);
-  return status;
+  return { status, finished: true };
 }

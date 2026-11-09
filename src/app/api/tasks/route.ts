@@ -1,31 +1,14 @@
-import { desc, sql } from "drizzle-orm";
 import { z } from "zod";
 import { getDb, schema } from "@/db";
 import { requireUser } from "@/lib/session";
 import { badRequest } from "@/lib/http";
 import { sortTask } from "@/agent/sort";
+import { listTasks } from "@/lib/queries";
 
 export async function GET() {
   const denied = await requireUser();
   if (denied) return denied;
-  const db = await getDb();
-  const rows = await db
-    .select({
-      task: schema.tasks,
-      awaiting: sql<number>`(select count(*)::int from ${schema.pendingActions} pa where pa.task_id = ${schema.tasks.id} and pa.status = 'awaiting')`,
-      stepsTotal: sql<number>`(select count(*)::int from ${schema.steps} s where s.task_id = ${schema.tasks.id})`,
-      stepsDone: sql<number>`(select count(*)::int from ${schema.steps} s where s.task_id = ${schema.tasks.id} and s.status in ('done','skipped'))`,
-    })
-    .from(schema.tasks)
-    .orderBy(desc(schema.tasks.createdAt));
-  return Response.json(
-    rows.map((r) => ({
-      ...r.task,
-      awaiting: Number(r.awaiting),
-      stepsTotal: Number(r.stepsTotal),
-      stepsDone: Number(r.stepsDone),
-    })),
-  );
+  return Response.json(await listTasks(await getDb()));
 }
 
 const createBody = z.object({

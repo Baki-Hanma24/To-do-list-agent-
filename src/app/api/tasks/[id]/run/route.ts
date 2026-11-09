@@ -3,10 +3,10 @@ import { and, eq, ne } from "drizzle-orm";
 import { getDb, schema } from "@/db";
 import { requireUser } from "@/lib/session";
 import { badRequest, idParam, notFound } from "@/lib/http";
-import { runAgent } from "@/agent/run";
+import { runSubAgent } from "@/agent/orchestrate";
 import { hasAnthropicKey } from "@/agent/client";
 
-// The agent keeps working after this responds; Vercel allows up to 300s.
+// The sub-agent (and its checker) keep working after this responds; Vercel allows up to 300s.
 export const maxDuration = 300;
 
 type Ctx = { params: Promise<{ id: string }> };
@@ -29,6 +29,6 @@ export async function POST(req: Request, { params }: Ctx) {
     .returning();
   if (!task) return Response.json({ error: "Already running, or this task is yours to do." }, { status: 409 });
 
-  after(() => runAgent({ db, taskId: id, timeZone: body.timeZone }).catch(console.error));
+  after(() => runSubAgent({ db, taskId: id, timeZone: body.timeZone }).catch(console.error));
   return Response.json({ ok: true }, { status: 202 });
 }

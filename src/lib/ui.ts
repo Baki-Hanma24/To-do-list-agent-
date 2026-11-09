@@ -6,13 +6,13 @@ export const PILE_INFO: Record<Pile, { label: string; hint: string; icon: string
   agent: { label: "Agent", hint: "Agent handles it end to end", icon: "✨" },
 };
 
-export const AREA_INFO: Record<Area, { label: string; dot: string; chip: string }> = {
-  work: { label: "Work", dot: "bg-sky-500", chip: "bg-sky-500/12 text-sky-700 dark:text-sky-300" },
-  home: { label: "Home", dot: "bg-amber-500", chip: "bg-amber-500/14 text-amber-800 dark:text-amber-300" },
-  family: { label: "Family", dot: "bg-pink-500", chip: "bg-pink-500/12 text-pink-700 dark:text-pink-300" },
-  money: { label: "Money", dot: "bg-emerald-500", chip: "bg-emerald-500/12 text-emerald-700 dark:text-emerald-300" },
-  health: { label: "Health", dot: "bg-rose-500", chip: "bg-rose-500/12 text-rose-700 dark:text-rose-300" },
-  other: { label: "Other", dot: "bg-zinc-400", chip: "bg-zinc-500/12 text-zinc-700 dark:text-zinc-300" },
+export const AREA_INFO: Record<Area, { label: string; icon: string; dot: string; chip: string }> = {
+  work: { label: "Work", icon: "💼", dot: "bg-sky-500", chip: "bg-sky-500/12 text-sky-700 dark:text-sky-300" },
+  home: { label: "Home", icon: "🏠", dot: "bg-amber-500", chip: "bg-amber-500/14 text-amber-800 dark:text-amber-300" },
+  family: { label: "Family", icon: "🎁", dot: "bg-pink-500", chip: "bg-pink-500/12 text-pink-700 dark:text-pink-300" },
+  money: { label: "Money", icon: "💵", dot: "bg-emerald-500", chip: "bg-emerald-500/12 text-emerald-700 dark:text-emerald-300" },
+  health: { label: "Health", icon: "❤️", dot: "bg-rose-500", chip: "bg-rose-500/12 text-rose-700 dark:text-rose-300" },
+  other: { label: "Other", icon: "✨", dot: "bg-violet-500", chip: "bg-violet-500/12 text-violet-700 dark:text-violet-300" },
 };
 
 export const STATUS_INFO: Record<TaskStatus, { label: string; cls: string }> = {

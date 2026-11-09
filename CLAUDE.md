@@ -25,6 +25,8 @@ A to-do list agent that holds everything I need to get done — work, home, fami
 Next.js 15 web app (TypeScript, Tailwind v4), deployed on Vercel. See `README.md` for setup.
 
 - `src/agent/`: sorting (`sort.ts`), the agent loop (`run.ts`), its tools (`tools.ts`), and prompts (`prompt.ts`). Keep `prompt.ts` in line with the rules above.
+- One task, one sub-agent: `orchestrate.ts` runs a sub-agent per task (in parallel for "Run all"), then the checker agent (`checker.ts`) reviews the work. A task isn't marked done until the checker passes it; problems go back to the sub-agent once to fix.
+- Board queries live in `src/lib/queries.ts`. In correlated subqueries, refer to the outer task as `"tasks"."id"`, not `${schema.tasks.id}` (that renders as a bare `"id"`).
 - `src/lib/execute-action.ts`: the **only** code that calls Gmail or Calendar. Only the approve route imports it. Agent tools may only queue `pending_actions`; never let them call Google directly.
 - `src/db/`: Drizzle schema. Uses Neon when `DATABASE_URL` is set, otherwise a local PGlite DB in `.data/`. After schema changes run `npm run db:generate`.
 - Checks: `npm run typecheck && npm run lint && npm test`. `tests/agent.test.ts` proves the approval gate; keep it passing.

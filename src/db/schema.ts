@@ -1,6 +1,6 @@
 import { pgTable, text, integer, timestamp, jsonb, serial, date } from "drizzle-orm/pg-core";
 
-import type { Area, Pile, TaskStatus, StepStatus, EventType, ActionKind, ActionStatus, DocKind } from "./enums";
+import type { Area, Pile, TaskStatus, StepStatus, EventType, ActionKind, ActionStatus, DocKind, CheckStatus } from "./enums";
 
 export * from "./enums";
 
@@ -13,6 +13,9 @@ export const tasks = pgTable("tasks", {
   sortReason: text("sort_reason").notNull().default(""),
   status: text("status").$type<TaskStatus>().notNull().default("todo"),
   summary: text("summary").notNull().default(""),
+  /** Result of the checker agent's independent review. */
+  checkStatus: text("check_status").$type<CheckStatus>().notNull().default("none"),
+  checkNote: text("check_note").notNull().default(""),
   due: date("due"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),

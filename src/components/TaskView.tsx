@@ -121,6 +121,26 @@ export default function TaskView({
           <p className="mt-5 rounded-2xl bg-surface-2 px-5 py-4 text-[1.05rem] leading-relaxed">{task.summary}</p>
         )}
 
+        {task.checkStatus !== "none" && (
+          <div
+            data-testid="checker-result"
+            className={cx(
+              "mt-3 flex items-start gap-3 rounded-2xl px-5 py-4",
+              task.checkStatus === "passed" && "bg-ok-soft text-ok",
+              task.checkStatus === "failed" && "bg-warn-soft text-warn",
+              task.checkStatus === "checking" && "bg-accent-soft text-accent",
+            )}
+          >
+            <span className={cx("text-lg", task.checkStatus === "checking" && "spin inline-block")}>
+              {task.checkStatus === "passed" ? "✓" : task.checkStatus === "failed" ? "!" : "✳"}
+            </span>
+            <p className="font-medium">
+              <strong className="font-bold">Checker agent: </strong>
+              {task.checkStatus === "checking" ? "reviewing the work…" : task.checkNote || (task.checkStatus === "passed" ? "looks good." : "found problems.")}
+            </p>
+          </div>
+        )}
+
         {/* Pile switcher */}
         <div className="mt-6">
           <p className="mb-2 text-[0.85rem] font-medium text-muted">

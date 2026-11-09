@@ -13,6 +13,10 @@ For Together and Agent tasks, tap **Do it for me**. The agent:
 3. drafts emails and calendar events,
 4. checks its own work, and keeps going until every step is done.
 
+**Run all** starts every open Agent and Together task at once, up to 8 at a time. Each task gets its own sub-agent. The board shows a live panel with progress and what each one is doing: searching, drafting, writing or checking.
+
+A separate **checker agent** reviews each task's work before it's marked done. It checks that every part of the task was covered, that facts are real (no placeholders), and that documents and emails are ready to use. If it finds problems, the sub-agent gets them as a to-do list and fixes them, then the checker looks again. If it's still not right, the task comes to you with the checker's note.
+
 **It never sends anything without asking you first.** Emails and calendar events appear as approval cards. You can **Approve**, **Edit** or **Reject** each one. Nothing reaches Gmail or Google Calendar until you tap Approve.
 
 ## Run it on your computer (no Google needed)
@@ -65,7 +69,8 @@ Create an API key at https://console.anthropic.com.
 - Auth.js with Google. Your refresh token is stored encrypted (AES-256-GCM).
 - Claude:
   - `claude-haiku-5-5` sorts tasks.
-  - `claude-opus-5-5` runs the agent, with web search, adaptive thinking, and server-side refusal fallbacks.
+  - `claude-opus-5-5` runs each sub-agent, with web search, adaptive thinking, and server-side refusal fallbacks.
+  - `claude-opus-5-5` is also the checker agent, which returns a structured pass/fail verdict.
 - The agent's tools can only **queue** emails and events (`pending_actions`). `src/lib/execute-action.ts` is the only code that talks to Google, and only the approve route uses it.
 
 ```bash
