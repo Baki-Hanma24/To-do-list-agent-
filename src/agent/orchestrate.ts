@@ -56,6 +56,8 @@ export async function runSubAgent(opts: SubAgentOptions): Promise<TaskStatus> {
     if (verdict.pass) {
       await logEvent(db, taskId, "check", `Checker agent: passed. ${verdict.note}`);
       await setCheck(db, taskId, { checkStatus: "passed", checkNote: verdict.note, status });
+      // Checked work moves from drafts to outputs.
+      await db.update(schema.documents).set({ stage: "final" }).where(eq(schema.documents.taskId, taskId));
       return status;
     }
 

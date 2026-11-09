@@ -7,6 +7,7 @@ export const EVENT_TYPES = ["thought", "tool", "result", "check", "error"] as co
 export const ACTION_KINDS = ["gmail_draft", "gmail_send", "calendar_event"] as const;
 export const ACTION_STATUSES = ["awaiting", "approved", "rejected", "done", "failed"] as const;
 export const CHECK_STATUSES = ["none", "checking", "passed", "failed"] as const;
+export const DOC_STAGES = ["draft", "final"] as const;
 export const DOC_KINDS = ["doc", "checklist", "sheet"] as const;
 
 export type Pile = (typeof PILES)[number];
@@ -18,3 +19,4 @@ export type ActionKind = (typeof ACTION_KINDS)[number];
 export type ActionStatus = (typeof ACTION_STATUSES)[number];
 export type DocKind = (typeof DOC_KINDS)[number];
 export type CheckStatus = (typeof CHECK_STATUSES)[number];
+export type DocStage = (typeof DOC_STAGES)[number];

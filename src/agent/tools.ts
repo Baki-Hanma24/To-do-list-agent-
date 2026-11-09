@@ -5,6 +5,7 @@ import type { DB } from "@/db";
 import { schema } from "@/db";
 import { DOC_KINDS, STEP_STATUSES } from "@/db/schema";
 import { emailPayload, calendarPayload } from "@/lib/payloads";
+import { getTemplate, listTemplates } from "./prompt";
 
 type ToolDef = Anthropic.Beta.BetaTool;
 
@@ -52,12 +53,23 @@ export const TOOL_DEFS: ToolDef[] = [
     ),
   },
   {
+    name: "get_template",
+    description:
+      "Load a template from the templates list in your instructions. Follow its structure and replace every {placeholder} with real content.",
+    strict: true,
+    input_schema: obj({ name: str('Template file name, e.g. "event-plan.md"') }, ["name"]),
+  },
+  {
     name: "create_document",
     description:
-      'Save a document the user can open and download. kind "doc" = markdown, "checklist" = markdown "- [ ]" list, "sheet" = CSV with a header row.',
+      'Save a document the user can open and download. kind "doc" = markdown, "checklist" = markdown "- [ ]" list, "sheet" = CSV with a header row. It stays a draft until the checker agent passes the task.',
     strict: true,
     input_schema: obj(
-      { title: str("Short title"), kind: { type: "string", enum: [...DOC_KINDS] }, content: str("Full content") },
+      {
+        title: str("Short, descriptive, lowercase title with hyphens, e.g. venue-options"),
+        kind: { type: "string", enum: [...DOC_KINDS] },
+        content: str("Full content"),
+      },
       ["title", "kind", "content"],
     ),
   },
@@ -124,6 +136,7 @@ const inputs = {
     status: z.enum(STEP_STATUSES),
     note: z.string(),
   }),
+  get_template: z.object({ name: z.string().min(1) }),
   create_document: z.object({ title: z.string().min(1), kind: z.enum(DOC_KINDS), content: z.string().min(1) }),
   propose_gmail_draft: emailPayload,
   propose_email_send: emailPayload,
@@ -197,6 +210,15 @@ export async function runTool(name: string, rawInput: unknown, ctx: ToolContext)
         content: "OK",
         log: status === "done" ? `✓ ${updated[0].text}` : status === "doing" ? `Working on: ${updated[0].text}` : undefined,
       };
+    }
+    case "get_template": {
+      const { name: file } = parsed.data as z.infer<typeof inputs.get_template>;
+      const body = getTemplate(file);
+      if (body === null) {
+        const names = listTemplates().map((t) => t.name).join(", ");
+        return { content: `No template named "${file}". Available: ${names || "none"}.`, isError: true };
+      }
+      return { content: body, log: `Using template: ${file}` };
     }
     case "create_document": {
       const doc = parsed.data as z.infer<typeof inputs.create_document>;

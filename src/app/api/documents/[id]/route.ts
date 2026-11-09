@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { getDb, schema } from "@/db";
 import { requireUser } from "@/lib/session";
 import { idParam, notFound } from "@/lib/http";
+import { documentFilename } from "@/lib/files";
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -14,9 +15,8 @@ export async function GET(_req: Request, { params }: Ctx) {
   const db = await getDb();
   const [doc] = await db.select().from(schema.documents).where(eq(schema.documents.id, id));
   if (!doc) return notFound();
-  const ext = doc.kind === "sheet" ? "csv" : "md";
   const type = doc.kind === "sheet" ? "text/csv" : "text/markdown";
-  const filename = `${doc.title.replace(/[^\w\- ]+/g, "").trim().replace(/\s+/g, "-") || "document"}.${ext}`;
+  const filename = documentFilename(doc.title, doc.kind);
   return new Response(doc.content, {
     headers: {
       "Content-Type": `${type}; charset=utf-8`,

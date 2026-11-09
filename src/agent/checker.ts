@@ -4,7 +4,7 @@ import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import type { DB } from "@/db";
 import { schema } from "@/db";
 import { anthropic, AGENT_MODEL } from "./client";
-import { CHECKER_SYSTEM_PROMPT } from "./prompt";
+import { checkerSystemPrompt } from "./prompt";
 
 export const verdictSchema = z.object({
   pass: z.boolean(),
@@ -55,7 +55,7 @@ export const claudeChecker: CheckFn = async (packet) => {
     output_config: { effort: "medium", format: betaZodOutputFormat(verdictSchema) },
     betas: ["server-side-fallback-2026-07-01"],
     fallbacks: "default",
-    system: CHECKER_SYSTEM_PROMPT,
+    system: checkerSystemPrompt(),
     messages: [{ role: "user", content: packet }],
   });
   if (res.stop_reason === "refusal" || !res.parsed_output) {

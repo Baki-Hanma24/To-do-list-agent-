@@ -62,6 +62,15 @@ Create an API key at https://console.anthropic.com.
 4. Set the **Build Command** to `npm run db:migrate && npm run build` so the database tables are created on each deploy.
 5. Deploy, open the URL on your phone, and sign in with Google. "Add to Home Screen" makes it feel like an app.
 
+## Make it yours (no coding)
+
+| Folder | What to do there |
+| --- | --- |
+| `workflows/` | Edit how the agents think and work: `sub-agent.md`, `checker-agent.md`, `sorting.md`, `success-criteria.md`. |
+| `templates/` | Add document templates the agent should follow (`.md` or `.csv`). |
+| `resources/` | Add notes about you (city, budget, family, favorite stores) so the agent stops guessing. Don't put passwords here. |
+| `drafts/`, `outputs/` | Documents start as **Draft** and become **Final** once the checker agent passes them. Downloads use lowercase-hyphen names like `venue-options.md`. |
+
 ## How it's built
 
 - Next.js 15 (App Router), TypeScript, Tailwind v4.

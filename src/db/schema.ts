@@ -1,6 +1,6 @@
 import { pgTable, text, integer, timestamp, jsonb, serial, date } from "drizzle-orm/pg-core";
 
-import type { Area, Pile, TaskStatus, StepStatus, EventType, ActionKind, ActionStatus, DocKind, CheckStatus } from "./enums";
+import type { Area, Pile, TaskStatus, StepStatus, EventType, ActionKind, ActionStatus, DocKind, CheckStatus, DocStage } from "./enums";
 
 export * from "./enums";
 
@@ -62,6 +62,8 @@ export const documents = pgTable("documents", {
   title: text("title").notNull(),
   kind: text("kind").$type<DocKind>().notNull(),
   content: text("content").notNull(),
+  /** "draft" until the checker agent passes the task, then "final" (an output). */
+  stage: text("stage").$type<DocStage>().notNull().default("draft"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

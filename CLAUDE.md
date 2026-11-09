@@ -17,20 +17,80 @@ A to-do list agent that holds everything I need to get done — work, home, fami
 
 - **Everything looks premium.** Clean, polished, high-quality design in anything you build.
 - **Shorter messages.** Keep replies brief and to the point.
+- **Match the requested length. Never pad.**
 - **Never send anything without asking me first.** No emails, messages, orders, bookings, or posts go out until I approve them. Draft first, then ask.
 - **Use bigger elements.** Larger text, buttons, and spacing in any UI.
+- **Review outputs before final delivery.**
+
+## File naming rules
+
+- Use lowercase file names.
+- Use hyphens instead of spaces.
+- Use descriptive names.
+- Avoid special characters.
+
+Examples:
+
+- `venue-options.md`
+- `gift-ideas-tracker.csv`
+- `drivers-test-study-guide.md`
+
+## Folder structure
+
+- `/workflows`: workflow instructions, agent definitions, and process documents. The app's agents read these directly.
+- `/outputs`: completed work and generated deliverables.
+- `/resources`: reference material, source documents, examples, and research. The agents read every file here.
+- `/drafts`: work in progress and temporary files.
+- `/templates`: reusable templates and frameworks. The agents load these with `get_template`.
+- `/src`: the web app's code. `/tests`: its tests. `/drizzle`: database migrations.
+
+## Agent behavior
+
+Before starting any task:
+
+1. Understand the objective.
+2. Ask clarifying questions if needed.
+3. Create a plan.
+4. Execute step by step.
+5. Review the output.
+6. Improve weak areas.
+7. Deliver the final result.
+
+- Never skip planning for complex tasks.
+- Never prioritize speed over quality.
+- Always optimize for usefulness and accuracy.
+
+## Success criteria
+
+A successful output should be:
+
+- Clear
+- Actionable
+- Accurate
+- Concise
+- Easy to understand
+- Immediately useful
 
 ## Project
 
 Next.js 15 web app (TypeScript, Tailwind v4), deployed on Vercel. See `README.md` for setup.
 
-- `src/agent/`: sorting (`sort.ts`), the agent loop (`run.ts`), its tools (`tools.ts`), and prompts (`prompt.ts`). Keep `prompt.ts` in line with the rules above.
-- One task, one sub-agent: `orchestrate.ts` runs a sub-agent per task (in parallel for "Run all"), then the checker agent (`checker.ts`) reviews the work. A task isn't marked done until the checker passes it; problems go back to the sub-agent once to fix.
-- Board queries live in `src/lib/queries.ts`. In correlated subqueries, refer to the outer task as `"tasks"."id"`, not `${schema.tasks.id}` (that renders as a bare `"id"`).
-- `src/lib/execute-action.ts`: the **only** code that calls Gmail or Calendar. Only the approve route imports it. Agent tools may only queue `pending_actions`; never let them call Google directly.
-- `src/db/`: Drizzle schema. Uses Neon when `DATABASE_URL` is set, otherwise a local PGlite DB in `.data/`. After schema changes run `npm run db:generate`.
-- Checks: `npm run typecheck && npm run lint && npm test`. `tests/agent.test.ts` proves the approval gate; keep it passing.
-- Local dev without Google: `AUTH_DEV_BYPASS=1 AUTH_SECRET=dev npm run dev`.
+- **Agent instructions live in `/workflows`:** `sub-agent.md`, `checker-agent.md`, `sorting.md`, `success-criteria.md`.
+  - `src/agent/prompt.ts` builds the prompts from those files, the `/templates` list, and `/resources`.
+  - Keep the workflow files in line with the rules above.
+- **`src/agent/`:** sorting (`sort.ts`), the agent loop (`run.ts`), and its tools (`tools.ts`).
+- **One task, one sub-agent:**
+  - `orchestrate.ts` runs a sub-agent per task (in parallel for "Run all"). Then the checker agent (`checker.ts`) reviews the work.
+  - A task isn't marked done until the checker passes it. Problems go back to the sub-agent once to fix.
+  - Documents stay `draft` until the checker passes the task, then become `final`.
+- **Board queries live in `src/lib/queries.ts`.** In correlated subqueries, refer to the outer task as `"tasks"."id"`, not `${schema.tasks.id}` (that renders as a bare `"id"`).
+- **`src/lib/execute-action.ts` is the only code that calls Gmail or Calendar.**
+  - Only the approve route imports it.
+  - Agent tools may only queue `pending_actions`. Never let them call Google directly.
+- **Download file names** come from `slugify()` in `src/lib/files.ts`, which follows the naming rules above.
+- **`src/db/`:** Drizzle schema. Uses Neon when `DATABASE_URL` is set, otherwise a local PGlite DB in `.data/`. After schema changes, run `npm run db:generate`.
+- **Checks:** `npm run typecheck && npm run lint && npm test`. `tests/agent.test.ts` proves the approval gate; keep it passing.
+- **Local dev without Google:** `AUTH_DEV_BYPASS=1 AUTH_SECRET=dev npm run dev`.
 
 ## Corrections log
 

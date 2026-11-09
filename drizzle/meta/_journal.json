@@ -15,6 +15,13 @@
       "when": 1794195452781,
       "tag": "0001_checker",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794197539574,
+      "tag": "0002_document-stage",
+      "breakpoints": true
     }
   ]
 }

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { PILES, AREAS, type Pile, type Area } from "@/db/schema";
 import { anthropic, hasAnthropicKey, SORT_MODEL } from "./client";
-import { SORT_SYSTEM_PROMPT } from "./prompt";
+import { sortSystemPrompt } from "./prompt";
 
 export const sortResult = z.object({
   pile: z.enum(PILES),
@@ -36,7 +36,7 @@ export async function sortTask(title: string, notes = ""): Promise<SortResult> {
       model: SORT_MODEL,
       max_tokens: 1024,
       output_config: { effort: "low", format: zodOutputFormat(sortResult) },
-      system: SORT_SYSTEM_PROMPT,
+      system: sortSystemPrompt(),
       messages: [{ role: "user", content: text }],
     });
     if (res.stop_reason === "refusal" || !res.parsed_output) return heuristicSort(text);

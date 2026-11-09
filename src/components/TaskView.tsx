@@ -360,7 +360,17 @@ function DocCard({ doc }: { doc: Document }) {
       <div className="flex items-center gap-3 p-4 pl-5">
         <button onClick={() => setOpen((v) => !v)} className="flex min-h-12 min-w-0 flex-1 items-center gap-3 text-left">
           <span className="text-2xl">{icon}</span>
-          <span className="truncate text-[1.05rem] font-semibold">{doc.title}</span>
+          <span className="line-clamp-2 min-w-0 break-words text-[1.05rem] font-semibold leading-snug">{doc.title}</span>
+          <span
+            data-testid="doc-stage"
+            title={doc.stage === "final" ? "Checked and final" : "Not checked yet"}
+            className={cx(
+              "shrink-0 rounded-full px-3 py-1 text-[0.85rem] font-semibold",
+              doc.stage === "final" ? "bg-ok-soft text-ok" : "bg-surface-2 text-muted",
+            )}
+          >
+            {doc.stage === "final" ? "✓ Final" : "Draft"}
+          </span>
           <span className="ml-auto text-muted">{open ? "▴" : "▾"}</span>
         </button>
         <a

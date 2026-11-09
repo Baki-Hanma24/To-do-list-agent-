@@ -4,7 +4,7 @@ import type { DB } from "@/db";
 import { schema } from "@/db";
 import type { EventType, TaskStatus } from "@/db/schema";
 import { anthropic, AGENT_MODEL } from "./client";
-import { AGENT_SYSTEM_PROMPT } from "./prompt";
+import { agentSystemPrompt } from "./prompt";
 import { TOOL_DEFS, runTool, hasAwaitingActions, type ToolContext } from "./tools";
 
 type CreateFn = (params: Beta.MessageCreateParamsNonStreaming) => Promise<Beta.BetaMessage>;
@@ -106,6 +106,8 @@ export async function runAgentDetailed(opts: RunOptions): Promise<RunResult> {
   const create: CreateFn = opts.create ?? ((p) => anthropic().beta.messages.create(p));
   const maxIterations = opts.maxIterations ?? 30;
   const deadline = Date.now() + (opts.timeBudgetMs ?? 260_000);
+  // Built once per run from /workflows, /templates and /resources.
+  const system = agentSystemPrompt();
 
   const ctx: ToolContext = { db, taskId, finishRejections: 0 };
   await setStatus(db, taskId, "working");
@@ -130,7 +132,7 @@ export async function runAgentDetailed(opts: RunOptions): Promise<RunResult> {
         output_config: { effort: "high" },
         betas: ["server-side-fallback-2026-07-01"],
         fallbacks: "default",
-        system: AGENT_SYSTEM_PROMPT,
+        system,
         tools: [WEB_SEARCH, ...TOOL_DEFS],
         messages,
       });
