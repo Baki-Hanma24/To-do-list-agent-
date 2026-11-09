@@ -11,6 +11,7 @@ Reusable frameworks the agent follows when it writes something. Before writing a
 | `shopping-list.csv` | Shopping lists and trackers (spreadsheet) |
 | `youtube-video-script.md` | YouTube videos: titles, hook, timestamped outline, B-roll, description |
 | `social-post-batch.md` | One idea turned into a reel/TikTok/Short script, an Instagram caption, and stories |
+| `coaching-reel.md` | My signature reel: I demo, teach the cue, then coach a client through it |
 | `content-calendar.csv` | Planning posts across Instagram, TikTok, and YouTube (spreadsheet) |
 | `client-check-in.md` | Weekly client check-ins |
 | `training-program.md` | Training programs and workout plans |

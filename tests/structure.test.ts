@@ -71,7 +71,7 @@ describe("prompts come from /workflows", () => {
 describe("business and content templates", () => {
   it("are listed with what they're for", () => {
     const p = agentSystemPrompt();
-    for (const name of ["youtube-video-script.md", "social-post-batch.md", "client-check-in.md", "training-program.md"]) {
+    for (const name of ["youtube-video-script.md", "social-post-batch.md", "client-check-in.md", "training-program.md", "coaching-reel.md"]) {
       expect(p).toMatch(new RegExp(`- ${name.replace(".", "\\.")}: \\S`));
     }
     expect(p).toContain("- content-calendar.csv: spreadsheet with columns Date, Platform, Format, Topic, Hook, Status, Link");

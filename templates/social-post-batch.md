@@ -1,4 +1,4 @@
-<!-- Use for: turning one idea into Instagram, TikTok, and YouTube Shorts content in one batch. -->
+<!-- Use for: turning one idea into Instagram, TikTok, and YouTube Shorts content in one batch. For a coaching-cue reel (demo, teach, client), use coaching-reel.md instead. -->
 # {Idea}: content batch
 
 **Core message:** {one sentence}

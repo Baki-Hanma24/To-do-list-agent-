@@ -27,6 +27,9 @@
   4. **Philosophy,** including thinking about how we think.
 - **Depth:** go beneath the surface. Explain the *why* and the mindset, not just the exercise. Reflective, layered ideas are welcome, as long as they stay clear and concrete.
 - **Clients on camera:** only with their permission. Show their effort and progress with respect.
+- **Signature format: the coaching reel.** I demo it, then teach the cue, then coach a client through it live. One cue becomes a story: I feel it, explain it, then help someone else get it. Use `templates/coaching-reel.md`.
+- **Look:** cinematic letterbox (black bars top and bottom). Teal/green color grade with warm amber highlights. Low, wide angles that show the scale of the gym and the mirrors.
+- **Captions:** bold white word-by-word subtitles in the lower third, in my natural spoken voice. Keep how I really talk; don't polish it into scripted lines.
 
 ## Platforms
 - **Instagram:** posts, reels, stories.
