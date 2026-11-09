@@ -45,9 +45,10 @@ export async function approveAndExecute(
     message = err instanceof Error ? err.message : String(err);
   }
 
+  // On failure, put it back in the queue so you can fix the problem and tap Approve again.
   await db
     .update(schema.pendingActions)
-    .set({ status: ok ? "done" : "failed", result: message })
+    .set({ status: ok ? "done" : "awaiting", result: message })
     .where(eq(schema.pendingActions.id, actionId));
   await refreshTaskStatus(db, action.taskId);
   return { ok, message };

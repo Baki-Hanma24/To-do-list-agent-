@@ -20,6 +20,16 @@ A to-do list agent that holds everything I need to get done — work, home, fami
 - **Never send anything without asking me first.** No emails, messages, orders, bookings, or posts go out until I approve them. Draft first, then ask.
 - **Use bigger elements.** Larger text, buttons, and spacing in any UI.
 
+## Project
+
+Next.js 15 web app (TypeScript, Tailwind v4), deployed on Vercel. See `README.md` for setup.
+
+- `src/agent/`: sorting (`sort.ts`), the agent loop (`run.ts`), its tools (`tools.ts`), and prompts (`prompt.ts`). Keep `prompt.ts` in line with the rules above.
+- `src/lib/execute-action.ts`: the **only** code that calls Gmail or Calendar. Only the approve route imports it. Agent tools may only queue `pending_actions`; never let them call Google directly.
+- `src/db/`: Drizzle schema. Uses Neon when `DATABASE_URL` is set, otherwise a local PGlite DB in `.data/`. After schema changes run `npm run db:generate`.
+- Checks: `npm run typecheck && npm run lint && npm test`. `tests/agent.test.ts` proves the approval gate; keep it passing.
+- Local dev without Google: `AUTH_DEV_BYPASS=1 AUTH_SECRET=dev npm run dev`.
+
 ## Corrections log
 
 When I correct you, add the new rule here so you don't repeat the mistake.
