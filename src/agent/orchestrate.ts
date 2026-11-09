@@ -10,6 +10,8 @@ export interface SubAgentOptions extends Omit<RunOptions, "feedback" | "timeBudg
   check?: CheckFn;
   /** Total wall-clock budget for work + checks + fixes. */
   totalBudgetMs?: number;
+  /** Redo with this rule: the user just taught it, so the first pass fixes the work to follow it. */
+  redoRule?: string;
   /** How many times the sub-agent may fix what the checker found. */
   maxFixes?: number;
 }
@@ -33,7 +35,11 @@ export async function runSubAgent(opts: SubAgentOptions): Promise<TaskStatus> {
   const budget = () => Math.max(deadline - Date.now() - CHECK_RESERVE_MS, 0);
 
   await setCheck(db, taskId, { checkStatus: "none", checkNote: "" });
-  let feedback: string[] | undefined;
+  // Redone work must pass the checker again before it counts as final.
+  if (opts.redoRule) await db.update(schema.documents).set({ stage: "draft" }).where(eq(schema.documents.taskId, taskId));
+  let feedback: string[] | undefined = opts.redoRule
+    ? [`The user just taught you a new rule. Redo whatever doesn't follow it: "${opts.redoRule}"`]
+    : undefined;
 
   for (let attempt = 0; ; attempt++) {
     const { status, finished } = await runAgentDetailed({ ...opts, feedback, timeBudgetMs: budget() });

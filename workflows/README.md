@@ -23,4 +23,5 @@ Agent definitions and process documents. **The app reads these files directly**,
 3. **Check.** The checker reviews the work against `success-criteria.md` (`checker-agent.md`).
    - Problems go back to the sub-agent once to fix.
    - Documents stay **drafts** until the checker passes them; then they become **final** outputs.
-4. **Your approval.** Emails and calendar events wait for you to tap Approve. Nothing is sent without it.
+4. **Rules you taught.** Corrections you save (on a task, on the Rules page, or as a reason when rejecting) are added to every sub-agent's instructions and every checker review. They're stored in the app's database, not in these files.
+5. **Your approval.** Emails and calendar events wait for you to tap Approve. Nothing is sent without it.

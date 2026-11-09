@@ -5,6 +5,7 @@ import type { DB } from "@/db";
 import { schema } from "@/db";
 import { anthropic, AGENT_MODEL } from "./client";
 import { checkerSystemPrompt } from "./prompt";
+import { checkerRulesBlock } from "./rules";
 
 export const verdictSchema = z.object({
   pass: z.boolean(),
@@ -21,12 +22,15 @@ const clip = (s: string, n: number) => (s.length > n ? `${s.slice(0, n)}\n…[cu
 /** Everything the sub-agent produced, as one plain-text packet for review. */
 export async function buildReviewPacket(db: DB, taskId: number): Promise<string> {
   const [task] = await db.select().from(schema.tasks).where(eq(schema.tasks.id, taskId));
-  const [steps, docs, actions] = await Promise.all([
+  const [steps, docs, actions, taught] = await Promise.all([
     db.select().from(schema.steps).where(eq(schema.steps.taskId, taskId)).orderBy(asc(schema.steps.position)),
     db.select().from(schema.documents).where(eq(schema.documents.taskId, taskId)).orderBy(asc(schema.documents.id)),
     db.select().from(schema.pendingActions).where(eq(schema.pendingActions.taskId, taskId)).orderBy(asc(schema.pendingActions.id)),
+    checkerRulesBlock(db),
   ]);
   const parts = [
+    taught,
+    taught && "",
     `TASK: ${task.title}`,
     task.notes && `NOTES: ${task.notes}`,
     task.due && `DUE: ${task.due}`,

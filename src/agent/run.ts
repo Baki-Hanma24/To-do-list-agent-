@@ -5,6 +5,7 @@ import { schema } from "@/db";
 import type { EventType, TaskStatus } from "@/db/schema";
 import { anthropic, AGENT_MODEL } from "./client";
 import { agentSystemPrompt } from "./prompt";
+import { agentRulesBlock } from "./rules";
 import { TOOL_DEFS, runTool, hasAwaitingActions, type ToolContext } from "./tools";
 
 type CreateFn = (params: Beta.MessageCreateParamsNonStreaming) => Promise<Beta.BetaMessage>;
@@ -106,8 +107,9 @@ export async function runAgentDetailed(opts: RunOptions): Promise<RunResult> {
   const create: CreateFn = opts.create ?? ((p) => anthropic().beta.messages.create(p));
   const maxIterations = opts.maxIterations ?? 30;
   const deadline = Date.now() + (opts.timeBudgetMs ?? 260_000);
-  // Built once per run from /workflows, /templates and /resources.
-  const system = agentSystemPrompt();
+  // Built once per run from /workflows, /templates and /resources, plus the rules the user taught.
+  const taught = await agentRulesBlock(db);
+  const system = taught ? `${agentSystemPrompt()}\n\n${taught}` : agentSystemPrompt();
 
   const ctx: ToolContext = { db, taskId, finishRejections: 0 };
   await setStatus(db, taskId, "working");

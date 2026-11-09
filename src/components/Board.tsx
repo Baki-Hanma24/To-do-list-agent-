@@ -112,14 +112,16 @@ export default function Board({ brand, headerRight }: { brand: React.ReactNode; 
     <div className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
       <header className="flex items-center justify-between gap-3 py-5">
         {brand}
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           {needsYou > 0 && (
             <span
               data-testid="needs-you"
-              className="flex h-12 items-center gap-2 whitespace-nowrap rounded-xl bg-warn-soft px-4 font-semibold text-warn"
+              aria-label={`${needsYou} need${needsYou === 1 ? "s" : ""} you`}
+              className="flex h-12 items-center gap-2 whitespace-nowrap rounded-xl bg-warn-soft px-3 font-semibold text-warn sm:px-4"
             >
               <span className="h-2.5 w-2.5 rounded-full bg-warn" />
-              {needsYou} need{needsYou === 1 ? "s" : ""} you
+              {needsYou}
+              <span className="hidden sm:inline">need{needsYou === 1 ? "s" : ""} you</span>
             </span>
           )}
           {headerRight}

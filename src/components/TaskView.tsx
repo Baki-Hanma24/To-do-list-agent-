@@ -8,6 +8,7 @@ import type { Document, PendingAction, Pile, RunEvent, Step, Task } from "@/db/s
 import { PILES } from "@/db/enums";
 import { AREA_INFO, PILE_INFO, STATUS_INFO, cx, formatDue } from "@/lib/ui";
 import ApprovalCard from "./ApprovalCard";
+import TeachCard from "./TeachCard";
 
 type Detail = { task: Task; steps: Step[]; events: RunEvent[]; actions: PendingAction[]; documents: Document[] };
 
@@ -272,6 +273,12 @@ export default function TaskView({
             ))}
           </ul>
         </section>
+      )}
+
+      {task.pile !== "mine" && !working && (steps.length > 0 || documents.length > 0 || actions.length > 0) && (
+        <div className="mt-8">
+          <TeachCard taskId={task.id} canRedo={true} onChanged={load} />
+        </div>
       )}
 
       {events.length > 0 && (

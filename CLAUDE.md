@@ -83,7 +83,8 @@ Next.js 15 web app (TypeScript, Tailwind v4), deployed on Vercel. See `README.md
   - `orchestrate.ts` runs a sub-agent per task (in parallel for "Run all"). Then the checker agent (`checker.ts`) reviews the work.
   - A task isn't marked done until the checker passes it. Problems go back to the sub-agent once to fix.
   - Documents stay `draft` until the checker passes the task, then become `final`.
-- **Board queries live in `src/lib/queries.ts`.** In correlated subqueries, refer to the outer task as `"tasks"."id"`, not `${schema.tasks.id}` (that renders as a bare `"id"`).
+- **Board queries live in `src/lib/queries.ts`.** See the corrections log about correlated subqueries.
+- **Rules the user teaches the app** (`rules` table, `src/agent/rules.ts`) are added to every sub-agent's prompt and every checker review.
 - **`src/lib/execute-action.ts` is the only code that calls Gmail or Calendar.**
   - Only the approve route imports it.
   - Agent tools may only queue `pending_actions`. Never let them call Google directly.
@@ -94,6 +95,22 @@ Next.js 15 web app (TypeScript, Tailwind v4), deployed on Vercel. See `README.md
 
 ## Corrections log
 
-When I correct you, add the new rule here so you don't repeat the mistake.
+Never make the same mistake twice.
 
-- Use bigger elements.
+- **Read this log before starting any task.**
+- **Log every mistake in the same turn.** When I correct you, or when you catch your own mistake (a bug, a failed check, a bad screenshot), add a rule here before moving on.
+  - Format: `- **Rule.** Why: what went wrong.`
+- **Fix it everywhere.** Fix every place the mistake exists, not just the one you noticed.
+- **Make it catchable.** Add a test or check that would catch it again, where possible.
+- **Write rules as specific instructions,** not apologies. Never remove a rule unless I say so.
+
+Rules:
+
+- **Use bigger elements.** Why: I asked for larger text, buttons, and spacing.
+- **In correlated SQL subqueries, refer to the outer task as `"tasks"."id"`,** never `${schema.tasks.id}`. Why: it rendered as a bare `"id"`, so step counts, approval counts, and "Run all" were wrong for every task.
+- **Check every UI change at phone width (390px) before shipping:** no wrapped headers, no cut-off titles, no sideways scrolling. Why: the phone layout broke repeatedly (header, add box, panel rows, document titles).
+- **Hide buttons that don't apply right now.** Why: "Keep going" showed while a task was only waiting on my approval.
+- **Route files export only HTTP handlers and route config.** Why: a stray export would have broken the Next.js build.
+- **Run a helper script and confirm its output before deleting it.** Why: a seed script was deleted before it had run.
+- **Copy exact text from the source before asserting it in a test.** Why: a test failed on "Parties" vs "parties".
+- **Check the phone layout with real data loaded and every badge showing,** at 320px and 390px, not just the loading or empty state. Why: a screenshot taken before tasks loaded looked fine, but with the "needs you" badge the header covered the app name.

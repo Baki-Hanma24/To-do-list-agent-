@@ -67,6 +67,15 @@ export const documents = pgTable("documents", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+/** Rules the user taught the agents ("Correct the agent"). Added to every sub-agent and checker prompt. */
+export const rules = pgTable("rules", {
+  id: serial("id").primaryKey(),
+  text: text("text").notNull(),
+  /** The task it was taught from, if any. Kept if that task is deleted. */
+  taskId: integer("task_id").references(() => tasks.id, { onDelete: "set null" }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 /** Single-user app: one row (id = 1) holds the encrypted Google refresh token. */
 export const googleTokens = pgTable("google_tokens", {
   id: integer("id").primaryKey(),
@@ -80,3 +89,4 @@ export type Step = typeof steps.$inferSelect;
 export type RunEvent = typeof runEvents.$inferSelect;
 export type PendingAction = typeof pendingActions.$inferSelect;
 export type Document = typeof documents.$inferSelect;
+export type Rule = typeof rules.$inferSelect;

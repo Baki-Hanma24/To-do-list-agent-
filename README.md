@@ -17,6 +17,8 @@ For Together and Agent tasks, tap **Do it for me**. The agent:
 
 A separate **checker agent** reviews each task's work before it's marked done. It checks that every part of the task was covered, that facts are real (no placeholders), and that documents and emails are ready to use. If it finds problems, the sub-agent gets them as a to-do list and fixes them, then the checker looks again. If it's still not right, the task comes to you with the checker's note.
 
+**It learns from your corrections.** On any task, use **Correct the agent** to say what was wrong, or give a reason when you reject an email. That becomes a rule every future sub-agent follows and the checker enforces. Tap **Redo with this rule** to fix the current task. See and edit all rules on the **📘 Rules** page.
+
 **It never sends anything without asking you first.** Emails and calendar events appear as approval cards. You can **Approve**, **Edit** or **Reject** each one. Nothing reaches Gmail or Google Calendar until you tap Approve.
 
 ## Run it on your computer (no Google needed)

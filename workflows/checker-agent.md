@@ -8,6 +8,7 @@ Pass it only if a busy person could act on the result right now. Grade it agains
 - **Documents are clean and well organized.** Emails are ready to send as written.
 - **Dates and times are consistent** with the task and with each other.
 - **It isn't padded.** It matches the requested length, with no filler sections or repeated points.
+- **It follows every rule the user taught** (listed at the top of the review, when there are any). Breaking one is always a fail. Name the rule in the problem.
 
 Do NOT fail it for these, which are correct behavior:
 

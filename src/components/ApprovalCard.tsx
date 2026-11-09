@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { PendingAction } from "@/db/schema";
 import { cx } from "@/lib/ui";
@@ -40,6 +41,9 @@ export default function ApprovalCard({ action, onDone }: { action: PendingAction
   const [editing, setEditing] = useState(false);
   const [busy, setBusy] = useState<"" | "approve" | "reject">("");
   const [error, setError] = useState("");
+  const router = useRouter();
+  const [rejecting, setRejecting] = useState(false);
+  const [reason, setReason] = useState("");
   const [email, setEmail] = useState<Email>(action.payload as Email);
   const [event, setEvent] = useState<Event>(action.payload as Event);
 
@@ -52,7 +56,12 @@ export default function ApprovalCard({ action, onDone }: { action: PendingAction
     const res = await fetch(`/api/actions/${action.id}/${kind}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: kind === "approve" && editing ? JSON.stringify({ payload: isEvent ? event : email }) : "{}",
+      body:
+        kind === "approve" && editing
+          ? JSON.stringify({ payload: isEvent ? event : email })
+          : kind === "reject" && reason.trim()
+            ? JSON.stringify({ reason: reason.trim() })
+            : "{}",
     });
     setBusy("");
     const json = await res.json().catch(() => ({}));
@@ -60,6 +69,7 @@ export default function ApprovalCard({ action, onDone }: { action: PendingAction
       setError(json.message ?? json.error ?? "That didn't work.");
       return;
     }
+    if (json.rule) router.refresh(); // a new rule was taught: update the Rules count
     onDone();
   }
 
@@ -112,6 +122,37 @@ export default function ApprovalCard({ action, onDone }: { action: PendingAction
         {error && <p className="text-danger">{error}</p>}
       </div>
 
+      {rejecting ? (
+        <div className="space-y-3 border-t border-line bg-surface-2/50 p-4 sm:px-6" data-testid="reject-panel">
+          <label className="block">
+            <span className="mb-1.5 block font-semibold">Tell the agent why (optional, it&apos;ll remember)</span>
+            <textarea
+              rows={3}
+              maxLength={500}
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              placeholder="e.g. Keep invites under 5 sentences"
+              className={input}
+            />
+          </label>
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={() => decide("reject")}
+              disabled={!!busy}
+              className="h-14 flex-1 rounded-2xl bg-danger px-6 text-lg font-semibold text-white shadow-card transition hover:opacity-90 disabled:opacity-50 sm:flex-none"
+            >
+              {busy === "reject" ? "Rejecting…" : reason.trim() ? "Reject & teach" : "Reject"}
+            </button>
+            <button
+              onClick={() => setRejecting(false)}
+              disabled={!!busy}
+              className="h-14 rounded-2xl border border-line px-6 text-lg font-semibold transition hover:bg-surface"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ) : (
       <div className="flex flex-wrap gap-3 border-t border-line p-4 sm:px-6">
         <button
           onClick={() => decide("approve")}
@@ -128,13 +169,14 @@ export default function ApprovalCard({ action, onDone }: { action: PendingAction
           {editing ? "Cancel edit" : "Edit"}
         </button>
         <button
-          onClick={() => decide("reject")}
+          onClick={() => setRejecting(true)}
           disabled={!!busy}
           className="h-14 rounded-2xl px-6 text-lg font-semibold text-muted transition hover:bg-surface-2 hover:text-danger"
         >
-          {busy === "reject" ? "…" : "Reject"}
+          Reject
         </button>
       </div>
+      )}
     </article>
   );
 }

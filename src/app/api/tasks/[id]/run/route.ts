@@ -18,7 +18,7 @@ export async function POST(req: Request, { params }: Ctx) {
   if (!id) return notFound();
   if (!hasAnthropicKey()) return badRequest("Add ANTHROPIC_API_KEY to run the agent.");
 
-  const body = (await req.json().catch(() => ({}))) as { timeZone?: string };
+  const body = (await req.json().catch(() => ({}))) as { timeZone?: string; redoRule?: string };
   const db = await getDb();
 
   // Claim the task so two taps can't start two runs.
@@ -29,6 +29,7 @@ export async function POST(req: Request, { params }: Ctx) {
     .returning();
   if (!task) return Response.json({ error: "Already running, or this task is yours to do." }, { status: 409 });
 
-  after(() => runSubAgent({ db, taskId: id, timeZone: body.timeZone }).catch(console.error));
+  const redoRule = typeof body.redoRule === "string" && body.redoRule.trim() ? body.redoRule.trim().slice(0, 500) : undefined;
+  after(() => runSubAgent({ db, taskId: id, timeZone: body.timeZone, redoRule }).catch(console.error));
   return Response.json({ ok: true }, { status: 202 });
 }
