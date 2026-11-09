@@ -8,6 +8,7 @@ Agent definitions and process documents. **The app reads these files directly**,
 | `sub-agent.md` | Instructions for the sub-agent that works on one task |
 | `checker-agent.md` | Instructions for the checker that reviews each task before it's marked done |
 | `success-criteria.md` | What a good result looks like. Given to both the sub-agent and the checker |
+| `editor-agent.md` | The editor's rules. Used by the app's 🎬 Editor **and** by `/edit-reel` in Claude Code (`.claude/agents/editor.md`), so both editors stay the same |
 
 ## The process
 

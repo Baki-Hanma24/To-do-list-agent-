@@ -150,3 +150,22 @@ describe("drafts and outputs", () => {
     expect((await db.select().from(schema.documents)).map((d) => d.stage)).toEqual(["draft"]);
   });
 });
+
+describe("editor in Claude Code", () => {
+  it("is a valid subagent that reads the same rules as the app's editor", () => {
+    const md = fs.readFileSync(".claude/agents/editor.md", "utf8");
+    const front = md.match(/^---\n([\s\S]*?)\n---/)?.[1] ?? "";
+    expect(front).toMatch(/^name: editor$/m);
+    expect(front).toMatch(/^description: \S/m);
+    expect(md).toContain("workflows/editor-agent.md");
+    expect(md).toContain("resources/content-playbook.md");
+    expect(md).toContain("outputs/edit-plans/");
+    expect(fs.existsSync("workflows/editor-agent.md")).toBe(true);
+  });
+
+  it("has an /edit-reel skill that hands off to the editor", () => {
+    const md = fs.readFileSync(".claude/skills/edit-reel/SKILL.md", "utf8");
+    expect(md).toMatch(/^---\nname: edit-reel\n/);
+    expect(md).toContain('subagent_type: "editor"');
+  });
+});

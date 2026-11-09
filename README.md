@@ -21,6 +21,8 @@ A separate **checker agent** reviews each task's work before it's marked done. I
 
 **🎬 Editor.** A separate agent that is strictly an editor. Add your raw clips (or screenshots) and tell it what you said. It returns a step-by-step plan for **Instagram's editor**: cut list with timestamps, where the trending sound hits, on-screen text, captions, color settings, a downloadable letterbox overlay, the loop ending, and a playbook scorecard. Your phone pulls small stills from the video, so big files never upload. The editor can't hear audio, so your notes matter, and it marks anything it guessed as unconfirmed.
 
+**🎬 Editor in Claude Code.** In a Claude Code session on this repo, type `/edit-reel`, attach your clips, and say what happens. The editor agent (`.claude/agents/editor.md`) pulls frames with ffmpeg (iPhone HEVC works) and saves an edit plan to `outputs/edit-plans/`. It follows the same rules as the app's editor, and no API key is needed.
+
 **It never sends anything without asking you first.** Emails and calendar events appear as approval cards. You can **Approve**, **Edit** or **Reject** each one. Nothing reaches Gmail or Google Calendar until you tap Approve.
 
 ## Run it on your computer (no Google needed)

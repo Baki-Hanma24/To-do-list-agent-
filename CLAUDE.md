@@ -99,6 +99,7 @@ Next.js 15 web app (TypeScript, Tailwind v4), deployed on Vercel. See `README.md
 - **Editor agent** (`/editor`, `src/agent/editor.ts`, `workflows/editor-agent.md`): strictly edits raw footage into an Instagram-editor plan.
   - One Opus call over browser-extracted JPEG stills (`src/lib/frames.ts`; max 36 frames, 3MB total) plus the user's notes.
   - No tools, so it can't post. Plans are saved in the `edits` table.
+  - **In Claude Code:** `/edit-reel` (`.claude/skills/edit-reel/`) hands clips to the `editor` subagent (`.claude/agents/editor.md`). It reads the same `workflows/editor-agent.md` and saves plans to `outputs/edit-plans/`.
 - **`src/lib/execute-action.ts` is the only code that calls Gmail or Calendar.**
   - Only the approve route imports it.
   - Agent tools may only queue `pending_actions`. Never let them call Google directly.
