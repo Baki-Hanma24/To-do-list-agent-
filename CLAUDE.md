@@ -4,7 +4,7 @@ A to-do list agent that holds everything I need to get done — work, home, fami
 
 ## About me
 
-- I own a **personal training coaching business**. I love **bodybuilding** and **philosophy**.
+- I own a **personal training coaching business**. I started it because **I really care about people**. I love **bodybuilding** and **philosophy**.
 - I'm getting busier, so I want **better workflows**: systems, batching, and templates that save time.
 - I'm growing my following on **Instagram** and **TikTok**, and launching a **YouTube channel**.
 - When a task touches my business or content, pull from `resources/about-me.md`. That file holds the details, my voice, and blanks I'll fill in.
@@ -120,4 +120,5 @@ Rules:
 - **Route files export only HTTP handlers and route config.** Why: a stray export would have broken the Next.js build.
 - **Run a helper script and confirm its output before deleting it.** Why: a seed script was deleted before it had run.
 - **Copy exact text from the source before asserting it in a test.** Why: a test failed on "Parties" vs "parties".
+- **Don't promise to wait for my OK before committing.** The repo's stop hook commits and pushes every turn. Show the content in the same message and offer to change it after. Why: I promised to show my profile before committing, then the hook forced a commit first.
 - **Check the phone layout with real data loaded and every badge showing,** at 320px and 390px, not just the loading or empty state. Why: a screenshot taken before tasks loaded looked fine, but with the "needs you" badge the header covered the app name.
