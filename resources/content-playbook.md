@@ -2,7 +2,9 @@
 
 Built from my best-performing reel. It's one reel, so treat this as a strong signal, not a law. Update it every time a new reel does well (use `templates/reel-breakdown.md`).
 
-## Best reel so far: "hard can it be…" (the high-level dead bug)
+> **Use the criteria, not the specifics.** New reels don't need to look like the dead bug reel. They need to hit the same checklist in their own way: a different hook, a different sound, a different real moment, a different ending beat.
+
+## One example of the criteria in action: "hard can it be…" (the high-level dead bug)
 
 **Results:** 146,255 views · 121,388 viewers · 4.1K likes · 6.2K saves · 1.6K shares · 63 reposts · 27 comments · 84 follows · avg watch 17s of ~46s. A collab with hanma_academy, crossposted to Facebook.
 
@@ -41,7 +43,7 @@ Built from my best-performing reel. It's one reel, so treat this as a strong sig
 - **Watch time:** put the realization on screen at ~10-15s (e.g. "It's basically a pullover"), and trim the long set.
 - **Credit:** tag the original creators (@squat_university, @luxiaojunsport, athlete @lidayin89kg) when using their footage.
 
-## Proven formula (check every reel against this)
+## Proven criteria (every reel should hit these, its own way)
 - [ ] **Hook in 3s:** a challenge or proof that it's hard, plus a trending sound or pattern interrupt.
 - [ ] **A real moment:** struggle, mistake, or realization. Don't hide it.
 - [ ] **Unscripted:** talking points, not a script. My real voice.

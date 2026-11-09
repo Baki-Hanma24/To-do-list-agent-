@@ -10,7 +10,7 @@ A to-do list agent that holds everything I need to get done — work, home, fami
 - My content is **cinematic and aesthetic**: me trying workouts, training with clients, self-motivation, and philosophy. I think deeply (metacognitive).
 - My content is **unscripted**: talking points only, never word-for-word scripts.
 - **Signature format:** cinematic coaching reels. I demo it, teach the cue, then coach a client through it.
-- **For anything content-related, follow `resources/content-playbook.md`:** what my best reel proved works, and the checklist every reel should hit.
+- **For anything content-related, follow the criteria in `resources/content-playbook.md`:** what my best reel proved works, and the checklist every reel should hit. Same criteria, not identical reels.
 - When a task touches my business or content, pull from `resources/about-me.md`. That file holds the details, my voice, and blanks I'll fill in.
 
 ## What the agent does

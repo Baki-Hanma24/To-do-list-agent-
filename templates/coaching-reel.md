@@ -28,7 +28,7 @@
 - **Follow trigger (on-screen text or caption, not a spoken outro, so the loop stays clean):** {series hook, e.g. "Part 2 on my page"}
 - **Comment trigger (caption):** {one easy question or keyword}
 
-## Proven formula check (from resources/content-playbook.md)
+## Proven criteria check (from resources/content-playbook.md; hit each one your own way)
 - [ ] Hook in 3s · [ ] story (attempt → result) · [ ] the why · [ ] save trigger · [ ] share trigger
 - [ ] follow trigger · [ ] comment trigger · [ ] loop ending · [ ] cinematic look · [ ] credit borrowed footage · [ ] 30-45s, no dead stretches
 

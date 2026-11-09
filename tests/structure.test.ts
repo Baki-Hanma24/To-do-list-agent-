@@ -9,7 +9,7 @@ vi.mock("@/google/calendar", () => ({ createCalendarEvent: vi.fn() }));
 
 import * as schema from "@/db/schema";
 import { slugify, documentFilename } from "@/lib/files";
-import { agentSystemPrompt, checkerSystemPrompt, sortSystemPrompt, getTemplate, listTemplates } from "@/agent/prompt";
+import { agentSystemPrompt, checkerSystemPrompt, sortSystemPrompt, editorSystemPrompt, getTemplate, listTemplates } from "@/agent/prompt";
 import { runTool } from "@/agent/tools";
 import { runSubAgent } from "@/agent/orchestrate";
 import { testDb, toolUse, message, scripted } from "./helpers";
@@ -167,5 +167,14 @@ describe("editor in Claude Code", () => {
     const md = fs.readFileSync(".claude/skills/edit-reel/SKILL.md", "utf8");
     expect(md).toMatch(/^---\nname: edit-reel\n/);
     expect(md).toContain('subagent_type: "editor"');
+  });
+});
+
+describe("same criteria, not identical reels", () => {
+  it("both the sub-agent and the editor are told to use the criteria, not copy the example reel", () => {
+    for (const p of [agentSystemPrompt(), editorSystemPrompt()]) {
+      expect(p).toContain("Use the criteria, not the specifics.");
+      expect(p).toContain("## Proven criteria (every reel should hit these, its own way)");
+    }
   });
 });
