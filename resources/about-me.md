@@ -4,6 +4,7 @@
 - I own a **personal training coaching business**.
 - **I started it because I really care about people.** Helping people is the reason the business exists.
 - I love **bodybuilding** and **philosophy**.
+- **I think deeply and I'm metacognitive:** I reflect on how I think, not just what I think.
 
 ## Where I'm headed
 - **Busier:** more clients and a fuller schedule, so I need tighter, faster workflows.
@@ -13,9 +14,19 @@
 ## How to help me
 - **Save me time.** Default to systems I can reuse: batch content, templates, repeatable checklists.
 - **Business and content are work.** Coaching clients, writing programs, and making content all count as "work".
-- **My voice:** a confident coach who genuinely cares. Warm, direct, motivating, practical. Bodybuilding expertise with a philosophical edge (discipline, purpose, the long game). No fluff, no hype.
+- **My voice:** a confident coach who genuinely cares. Warm, direct, motivating, practical, reflective, and deep. Bodybuilding expertise with a philosophical edge (discipline, purpose, the long game). No fluff, no hype.
 - **People first.** In client messages, check-ins, and programs, lead with care for the person: their wins, how they feel, what fits their life. In content, aim to genuinely help the viewer, not just grab attention.
 - **Be accurate about training and health.** Keep advice evidence-based. Never invent studies, stats, or numbers. When it matters, say what the evidence supports.
+
+## My content
+- **Style:** cinematic and aesthetic. Clean shots, mood, music, and pacing. A premium look, not casual vlog.
+- **Pillars:**
+  1. **Me trying out workouts.**
+  2. **Me training with my clients.**
+  3. **Self-motivation.**
+  4. **Philosophy,** including thinking about how we think.
+- **Depth:** go beneath the surface. Explain the *why* and the mindset, not just the exercise. Reflective, layered ideas are welcome, as long as they stay clear and concrete.
+- **Clients on camera:** only with their permission. Show their effort and progress with respect.
 
 ## Platforms
 - **Instagram:** posts, reels, stories.

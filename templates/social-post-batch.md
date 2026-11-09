@@ -2,6 +2,9 @@
 # {Idea}: content batch
 
 **Core message:** {one sentence}
+**Pillar:** {trying a workout / training with a client / self-motivation / philosophy}
+**Look and feel:** {shots and angles, lighting, color grade, music mood, pacing: cinematic, not casual}
+**Client on camera:** {permission confirmed? yes / not needed}
 
 ## Reel / TikTok / Short (15-45 sec)
 - **Hook (first 2 sec):** {line + on-screen text}
