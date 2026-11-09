@@ -28,11 +28,26 @@ export async function RulesLink() {
       href="/rules"
       data-testid="rules-link"
       aria-label={`Rules the agents follow: ${n}`}
-      className="flex h-12 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-xl px-2 font-semibold sm:gap-2 sm:px-3 text-muted transition hover:bg-surface-2 hover:text-ink"
+      className="flex h-12 shrink-0 items-center gap-1 whitespace-nowrap rounded-xl px-1.5 font-semibold sm:gap-2 sm:px-3 text-muted transition hover:bg-surface-2 hover:text-ink"
     >
       <span className="text-lg">📘</span>
       <span className="hidden sm:inline">Rules</span>
-      <span className="rounded-full bg-surface-2 px-2 py-0.5 text-[0.85rem]">{n}</span>
+      <span className="rounded-full bg-surface-2 px-1.5 py-0.5 text-[0.85rem] sm:px-2">{n}</span>
+    </Link>
+  );
+}
+
+/** The editor agent. Icon-only on phones. */
+export function EditorLink() {
+  return (
+    <Link
+      href="/editor"
+      data-testid="editor-link"
+      aria-label="Editor"
+      className="flex h-12 shrink-0 items-center gap-1 whitespace-nowrap rounded-xl px-1.5 font-semibold text-muted transition hover:bg-surface-2 hover:text-ink sm:gap-2 sm:px-3"
+    >
+      <span className="text-lg">🎬</span>
+      <span className="hidden sm:inline">Editor</span>
     </Link>
   );
 }
@@ -40,6 +55,7 @@ export async function RulesLink() {
 export function HeaderActions() {
   return (
     <>
+      <EditorLink />
       <RulesLink />
       <SignOutButton />
     </>

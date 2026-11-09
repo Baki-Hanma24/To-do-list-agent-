@@ -96,6 +96,9 @@ Next.js 15 web app (TypeScript, Tailwind v4), deployed on Vercel. See `README.md
   - Documents stay `draft` until the checker passes the task, then become `final`.
 - **Board queries live in `src/lib/queries.ts`.** See the corrections log about correlated subqueries.
 - **Rules the user teaches the app** (`rules` table, `src/agent/rules.ts`) are added to every sub-agent's prompt and every checker review.
+- **Editor agent** (`/editor`, `src/agent/editor.ts`, `workflows/editor-agent.md`): strictly edits raw footage into an Instagram-editor plan.
+  - One Opus call over browser-extracted JPEG stills (`src/lib/frames.ts`; max 36 frames, 3MB total) plus the user's notes.
+  - No tools, so it can't post. Plans are saved in the `edits` table.
 - **`src/lib/execute-action.ts` is the only code that calls Gmail or Calendar.**
   - Only the approve route imports it.
   - Agent tools may only queue `pending_actions`. Never let them call Google directly.
@@ -127,3 +130,4 @@ Rules:
 - **Don't promise to wait for my OK before committing.** The repo's stop hook commits and pushes every turn. Show the content in the same message and offer to change it after. Why: I promised to show my profile before committing, then the hook forced a commit first.
 - **Label guesses as guesses.** When analyzing something I can't fully see or hear (audio, intent), mark inferred parts as unconfirmed and ask. Why: the first content playbook presented a guessed structure as fact before I described the audio and hook.
 - **Check the phone layout with real data loaded and every badge showing,** at 320px and 390px, not just the loading or empty state. Why: a screenshot taken before tasks loaded looked fine, but with the "needs you" badge the header covered the app name.
+- **Every new header item means rechecking the header on every page at 320px and 390px.** Why: adding the 🎬 Editor link cut the app name to "To-Do A…" on iPhone 14.

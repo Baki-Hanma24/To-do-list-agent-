@@ -19,6 +19,8 @@ A separate **checker agent** reviews each task's work before it's marked done. I
 
 **It learns from your corrections.** On any task, use **Correct the agent** to say what was wrong, or give a reason when you reject an email. That becomes a rule every future sub-agent follows and the checker enforces. Tap **Redo with this rule** to fix the current task. See and edit all rules on the **📘 Rules** page.
 
+**🎬 Editor.** A separate agent that is strictly an editor. Add your raw clips (or screenshots) and tell it what you said. It returns a step-by-step plan for **Instagram's editor**: cut list with timestamps, where the trending sound hits, on-screen text, captions, color settings, a downloadable letterbox overlay, the loop ending, and a playbook scorecard. Your phone pulls small stills from the video, so big files never upload. The editor can't hear audio, so your notes matter, and it marks anything it guessed as unconfirmed.
+
 **It never sends anything without asking you first.** Emails and calendar events appear as approval cards. You can **Approve**, **Edit** or **Reject** each one. Nothing reaches Gmail or Google Calendar until you tap Approve.
 
 ## Run it on your computer (no Google needed)

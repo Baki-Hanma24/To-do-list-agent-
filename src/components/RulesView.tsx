@@ -39,7 +39,7 @@ export default function RulesView({ brand, footer }: { brand: React.ReactNode; f
 
   return (
     <div className="mx-auto max-w-3xl px-4 pb-24 sm:px-6">
-      <header className="flex items-center justify-between gap-3 py-5">{brand}</header>
+      <header className="flex items-center justify-between gap-2 py-5 sm:gap-3">{brand}</header>
 
       <Link href="/" className="inline-flex h-12 items-center gap-2 rounded-xl px-2 text-muted hover:text-ink">
         ← All tasks

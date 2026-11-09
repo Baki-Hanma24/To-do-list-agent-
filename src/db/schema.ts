@@ -76,6 +76,16 @@ export const rules = pgTable("rules", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+/** Edit plans from the editor agent. The video frames themselves are never stored. */
+export const edits = pgTable("edits", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  notes: text("notes").notNull().default(""),
+  frameCount: integer("frame_count").notNull(),
+  plan: jsonb("plan").$type<Record<string, unknown>>().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 /** Single-user app: one row (id = 1) holds the encrypted Google refresh token. */
 export const googleTokens = pgTable("google_tokens", {
   id: integer("id").primaryKey(),
@@ -90,3 +100,4 @@ export type RunEvent = typeof runEvents.$inferSelect;
 export type PendingAction = typeof pendingActions.$inferSelect;
 export type Document = typeof documents.$inferSelect;
 export type Rule = typeof rules.$inferSelect;
+export type Edit = typeof edits.$inferSelect;

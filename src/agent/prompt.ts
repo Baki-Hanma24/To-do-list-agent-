@@ -97,6 +97,13 @@ export function checkerSystemPrompt(): string {
   return cached("checker", () => [read("workflows", "checker-agent.md"), successCriteria()].join("\n\n"));
 }
 
+/** The editor: strictly edits raw footage into a reel. Reads the content playbook and about-me from /resources. */
+export function editorSystemPrompt(): string {
+  return cached("editor", () =>
+    [read("workflows", "editor-agent.md"), successCriteria(), resourcesBlock()].filter(Boolean).join("\n\n"),
+  );
+}
+
 export function sortSystemPrompt(): string {
   return cached("sort", () => read("workflows", "sorting.md"));
 }

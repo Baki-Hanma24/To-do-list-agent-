@@ -311,7 +311,7 @@ export default function TaskView({
 function Shell({ brand, headerRight, children }: { brand: React.ReactNode; headerRight?: React.ReactNode; children: React.ReactNode }) {
   return (
     <div className="mx-auto max-w-3xl px-4 pb-24 sm:px-6">
-      <header className="flex items-center justify-between gap-3 py-5">
+      <header className="flex items-center justify-between gap-2 py-5 sm:gap-3">
         {brand}
         {headerRight}
       </header>
