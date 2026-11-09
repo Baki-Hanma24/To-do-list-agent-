@@ -24,13 +24,14 @@
 - **The "it clicked" moment:** {what changes in their rep or what they say}
 
 ## Ending (last 3-5s)
+- **Loop beat (proven):** {a raw, honest reaction right at the end, e.g. "oh sh*t" in pain, that cuts straight back to the start}
 - **Closing line:** {short, memorable}
 - **Follow trigger:** {series hook, e.g. "Level 2 next, follow so you don't miss it"}
 - **Comment trigger:** {one easy question or keyword}
 
 ## Proven formula check (from resources/content-playbook.md)
 - [ ] Hook in 3s · [ ] story (attempt → result) · [ ] the why · [ ] save trigger · [ ] share trigger
-- [ ] follow trigger · [ ] comment trigger · [ ] cinematic look · [ ] credit borrowed footage · [ ] 30-45s, no dead stretches
+- [ ] follow trigger · [ ] comment trigger · [ ] loop ending · [ ] cinematic look · [ ] credit borrowed footage · [ ] 30-45s, no dead stretches
 
 ## Edit notes
 - Letterbox, teal/green grade with warm amber highlights
