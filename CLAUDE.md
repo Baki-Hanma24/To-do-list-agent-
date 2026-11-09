@@ -9,6 +9,7 @@ A to-do list agent that holds everything I need to get done — work, home, fami
 - I'm growing my following on **Instagram** and **TikTok**, and launching a **YouTube channel**.
 - My content is **cinematic and aesthetic**: me trying workouts, training with clients, self-motivation, and philosophy. I think deeply (metacognitive).
 - **Signature format:** cinematic coaching reels. I demo it, teach the cue, then coach a client through it.
+- **For anything content-related, follow `resources/content-playbook.md`:** what my best reel proved works, and the checklist every reel should hit.
 - When a task touches my business or content, pull from `resources/about-me.md`. That file holds the details, my voice, and blanks I'll fill in.
 
 ## What the agent does

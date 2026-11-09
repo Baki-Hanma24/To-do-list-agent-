@@ -66,12 +66,19 @@ describe("prompts come from /workflows", () => {
     expect(p).toContain('<resource name="about-me.md">');
     expect(p).toContain("personal training coaching business");
   });
+
+  it("includes the content playbook in full (not cut off by the size cap)", () => {
+    const p = agentSystemPrompt();
+    expect(p).toContain('<resource name="content-playbook.md">');
+    expect(p).toContain("**Tight:** 30-45s, no dead stretches.");
+    expect(p).not.toContain("…[cut]");
+  });
 });
 
 describe("business and content templates", () => {
   it("are listed with what they're for", () => {
     const p = agentSystemPrompt();
-    for (const name of ["youtube-video-script.md", "social-post-batch.md", "client-check-in.md", "training-program.md", "coaching-reel.md"]) {
+    for (const name of ["youtube-video-script.md", "social-post-batch.md", "client-check-in.md", "training-program.md", "coaching-reel.md", "reel-breakdown.md"]) {
       expect(p).toMatch(new RegExp(`- ${name.replace(".", "\\.")}: \\S`));
     }
     expect(p).toContain("- content-calendar.csv: spreadsheet with columns Date, Platform, Format, Topic, Hook, Status, Link");

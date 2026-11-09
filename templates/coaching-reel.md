@@ -6,6 +6,7 @@
 
 ## Act 1: I demo it (0-10s)
 - **Hook (said naturally):** {line that names the feeling or the problem, the way I'd actually say it}
+  - Proven option: a **challenge hook**. Open on proof that it's hard ("this is a high level…"), then cut to me trying it.
 - **Shot:** {low, wide angle at the rack / station}
 - **Caption beats:** {3-6 short spoken phrases, word by word}
 
@@ -21,7 +22,12 @@
 
 ## Ending (last 3-5s)
 - **Closing line:** {short, memorable}
-- **Call to action:** {save this / follow for more cues / coaching link}
+- **Follow trigger:** {series hook, e.g. "Level 2 next, follow so you don't miss it"}
+- **Comment trigger:** {one easy question or keyword}
+
+## Proven formula check (from resources/content-playbook.md)
+- [ ] Hook in 3s · [ ] story (attempt → result) · [ ] the why · [ ] save trigger · [ ] share trigger
+- [ ] follow trigger · [ ] comment trigger · [ ] cinematic look · [ ] credit borrowed footage · [ ] 30-45s, no dead stretches
 
 ## Edit notes
 - Letterbox, teal/green grade with warm amber highlights
