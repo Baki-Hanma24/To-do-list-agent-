@@ -25,9 +25,8 @@
 
 ## Ending (last 3-5s)
 - **Loop beat (proven):** {a raw, honest reaction right at the end, e.g. "oh sh*t" in pain, that cuts straight back to the start}
-- **Closing line:** {short, memorable}
-- **Follow trigger:** {series hook, e.g. "Level 2 next, follow so you don't miss it"}
-- **Comment trigger:** {one easy question or keyword}
+- **Follow trigger (on-screen text or caption, not a spoken outro, so the loop stays clean):** {series hook, e.g. "Part 2 on my page"}
+- **Comment trigger (caption):** {one easy question or keyword}
 
 ## Proven formula check (from resources/content-playbook.md)
 - [ ] Hook in 3s · [ ] story (attempt → result) · [ ] the why · [ ] save trigger · [ ] share trigger

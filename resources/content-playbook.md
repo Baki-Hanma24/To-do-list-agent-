@@ -36,7 +36,7 @@ Built from my best-performing reel. It's one reel, so treat this as a strong sig
 - **Collab:** the hanma_academy collab reached a second audience.
 
 **What to fix next time:**
-- **Follows:** tell people why to follow. Make it a series ("Trying viral exercises, part 2 on my page").
+- **Follows:** tell people why to follow. Make it a series ("Trying viral exercises, part 2 on my page"). Put it in on-screen text or the caption, not a spoken outro, so the loop stays clean.
 - **Comments:** ask one easy question ("What should I try next?") or use a keyword.
 - **Watch time:** put the realization on screen at ~10-15s (e.g. "It's basically a pullover"), and trim the long set.
 - **Credit:** tag the original creators (@squat_university, @luxiaojunsport, athlete @lidayin89kg) when using their footage.
