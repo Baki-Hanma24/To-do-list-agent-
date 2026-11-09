@@ -4,6 +4,7 @@ A to-do list agent that holds everything I need to get done — work, home, fami
 
 ## About me
 
+- I go by **Baki** (from *Baki the Grappler*): Tae Kwon Do growing up, lifting since 12 (now 27), big bodybuilding fan. See `resources/baki.md`; the full research is in `resources/reference/baki-deep-dive.md`.
 - I own a **personal training coaching business**. I started it because **I really care about people**. I love **bodybuilding** and **philosophy**.
 - I'm getting busier, so I want **better workflows**: systems, batching, and templates that save time.
 - I'm growing my following on **Instagram** and **TikTok**, and launching a **YouTube channel**.

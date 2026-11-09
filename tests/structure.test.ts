@@ -178,3 +178,13 @@ describe("same criteria, not identical reels", () => {
     }
   });
 });
+
+describe("Baki", () => {
+  it("baki.md is in the agent prompt in full; the long deep dive is not", () => {
+    const p = agentSystemPrompt();
+    expect(p).toContain('<resource name="baki.md">');
+    expect(p).toContain("Full research and sources: `resources/reference/baki-deep-dive.md`.");
+    expect(p).not.toContain("…[cut]");
+    expect(p).not.toContain("# Baki deep dive");
+  });
+});

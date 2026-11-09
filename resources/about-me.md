@@ -1,6 +1,8 @@
 # About me
 
 ## Who I am
+- **I go by Baki** (from *Baki the Grappler*; see `baki.md`).
+- **Tae Kwon Do growing up · weight training since 12 (now 27) · big bodybuilding fan.**
 - I own a **personal training coaching business**.
 - **I started it because I really care about people.** Helping people is the reason the business exists.
 - I love **bodybuilding** and **philosophy**.
