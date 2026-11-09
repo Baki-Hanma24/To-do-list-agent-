@@ -109,6 +109,28 @@ Next.js 15 web app (TypeScript, Tailwind v4), deployed on Vercel. See `README.md
 - **Checks:** `npm run typecheck && npm run lint && npm test`. `tests/agent.test.ts` proves the approval gate; keep it passing.
 - **Local dev without Google:** `AUTH_DEV_BYPASS=1 AUTH_SECRET=dev npm run dev`.
 
+## Keep improving
+
+Get better every session, not just when I correct you.
+
+- **After every task, update what you learned, in the same turn.** Put it where the agents will use it:
+
+  | What you learned | Where it goes |
+  |---|---|
+  | Something about me | `resources/about-me.md` |
+  | What works in my content | `resources/content-playbook.md` |
+  | Baki | `resources/baki.md` |
+  | A reusable format | `templates/` |
+  | How the agents work | `workflows/` |
+  | How the editor works | `.claude/agents/editor.md` |
+  | A Claude Code command | `.claude/skills/` |
+
+- **When a new reel's numbers come in,** analyze it with `templates/reel-breakdown.md` and update the playbook's criteria.
+- **When a repeated workflow shows up,** turn it into a skill or template.
+- **Keep files tight.** Edit and replace outdated lines instead of piling on. Top-level `/resources` files must stay under 6K each (the agents' cap).
+- **Say in one line what you updated,** so I always know what changed.
+- **Run `/learn` anytime** to review the session and update everything at once.
+
 ## Corrections log
 
 Never make the same mistake twice.

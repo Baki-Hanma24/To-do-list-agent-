@@ -188,3 +188,12 @@ describe("Baki", () => {
     expect(p).not.toContain("# Baki deep dive");
   });
 });
+
+describe("keep improving", () => {
+  it("has a /learn skill and every top-level resource fits the agents' cap", () => {
+    expect(fs.readFileSync(".claude/skills/learn/SKILL.md", "utf8")).toMatch(/^---\nname: learn\n/);
+    for (const f of fs.readdirSync("resources").filter((n) => n.endsWith(".md") && n !== "README.md")) {
+      expect(fs.readFileSync(path.join("resources", f), "utf8").length, f).toBeLessThanOrEqual(6000);
+    }
+  });
+});
