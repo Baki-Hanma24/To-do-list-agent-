@@ -7,7 +7,8 @@
 **Client on camera:** {permission confirmed? yes / not needed}
 
 ## Reel / TikTok / Short (15-45 sec)
-- **Hook (first 2 sec):** {line + on-screen text}
+- **Hook talking point (first 2 sec):** {the idea to open on, plus on-screen text. Not a scripted line.}
+- **Trending sound:** {sound effect or audio that lands in the hook}
 - **Beats:**
   1. {beat, with on-screen text}
   2. {beat}

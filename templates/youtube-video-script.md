@@ -1,6 +1,8 @@
 <!-- Use for: YouTube video scripts and outlines (long-form). For Shorts, use social-post-batch.md. -->
 # {Video title}
 
+> **Beats and talking points, not a word-for-word script.** I speak off the cuff.
+
 **Title options:**
 1. {title, under 60 characters}
 2. {title}
@@ -12,8 +14,8 @@
 **Look and feel:** {cinematic shot list, lighting, color grade, music mood, pacing}
 **Client on camera:** {permission confirmed? yes / not needed}
 
-## Hook (0:00-0:15)
-{Say the payoff or the tension in the first sentence. No intro, no "hey guys".}
+## Hook (talking point, 0:00-0:15)
+{The payoff or tension to open on, as an idea, not a line. No intro, no "hey guys".}
 
 ## Outline
 | Time | Section | Key points | B-roll / on-screen |

@@ -29,6 +29,8 @@
 - **Clients on camera:** only with their permission. Show their effort and progress with respect.
 - **Signature format: the coaching reel.** I demo it, then teach the cue, then coach a client through it live. One cue becomes a story: I feel it, explain it, then help someone else get it. Use `templates/coaching-reel.md`.
 - **Look:** cinematic letterbox (black bars top and bottom). Teal/green color grade with warm amber highlights. Low, wide angles that show the scale of the gym and the mirrors.
+- **I never follow a script.** Give me talking points, beats, and ideas, never word-for-word lines. My voiceovers are honest and off the cuff, and I correct myself live when I learn something.
+- **Humor and trending sounds** are part of my style.
 - **Captions:** bold white word-by-word subtitles in the lower third, in my natural spoken voice. Keep how I really talk; don't polish it into scripted lines.
 
 ## Platforms

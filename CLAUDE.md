@@ -8,6 +8,7 @@ A to-do list agent that holds everything I need to get done — work, home, fami
 - I'm getting busier, so I want **better workflows**: systems, batching, and templates that save time.
 - I'm growing my following on **Instagram** and **TikTok**, and launching a **YouTube channel**.
 - My content is **cinematic and aesthetic**: me trying workouts, training with clients, self-motivation, and philosophy. I think deeply (metacognitive).
+- My content is **unscripted**: talking points only, never word-for-word scripts.
 - **Signature format:** cinematic coaching reels. I demo it, teach the cue, then coach a client through it.
 - **For anything content-related, follow `resources/content-playbook.md`:** what my best reel proved works, and the checklist every reel should hit.
 - When a task touches my business or content, pull from `resources/about-me.md`. That file holds the details, my voice, and blanks I'll fill in.
@@ -124,4 +125,5 @@ Rules:
 - **Run a helper script and confirm its output before deleting it.** Why: a seed script was deleted before it had run.
 - **Copy exact text from the source before asserting it in a test.** Why: a test failed on "Parties" vs "parties".
 - **Don't promise to wait for my OK before committing.** The repo's stop hook commits and pushes every turn. Show the content in the same message and offer to change it after. Why: I promised to show my profile before committing, then the hook forced a commit first.
+- **Label guesses as guesses.** When analyzing something I can't fully see or hear (audio, intent), mark inferred parts as unconfirmed and ask. Why: the first content playbook presented a guessed structure as fact before I described the audio and hook.
 - **Check the phone layout with real data loaded and every badge showing,** at 320px and 390px, not just the loading or empty state. Why: a screenshot taken before tasks loaded looked fine, but with the "needs you" badge the header covered the app name.
