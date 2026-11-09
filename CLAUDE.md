@@ -2,6 +2,13 @@
 
 A to-do list agent that holds everything I need to get done — work, home, family, money, health, all of it — and actually goes and does the work.
 
+## About me
+
+- I own a **personal training coaching business**. I love **bodybuilding** and **philosophy**.
+- I'm getting busier, so I want **better workflows**: systems, batching, and templates that save time.
+- I'm growing my following on **Instagram** and **TikTok**, and launching a **YouTube channel**.
+- When a task touches my business or content, pull from `resources/about-me.md`. That file holds the details, my voice, and blanks I'll fill in.
+
 ## What the agent does
 
 1. **Sort every task into three piles:**

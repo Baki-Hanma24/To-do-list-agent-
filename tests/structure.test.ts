@@ -53,7 +53,28 @@ describe("prompts come from /workflows", () => {
   });
 
   it("adds no resources section when the folder is empty", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "agent-content-"));
+    for (const d of ["workflows", "templates"]) fs.cpSync(d, path.join(dir, d), { recursive: true });
+    fs.mkdirSync(path.join(dir, "resources"));
+    fs.copyFileSync("resources/README.md", path.join(dir, "resources", "README.md"));
+    process.env.AGENT_CONTENT_DIR = dir;
     expect(agentSystemPrompt()).not.toContain("Reference material from the user");
+  });
+
+  it("includes the real about-me file", () => {
+    const p = agentSystemPrompt();
+    expect(p).toContain('<resource name="about-me.md">');
+    expect(p).toContain("personal training coaching business");
+  });
+});
+
+describe("business and content templates", () => {
+  it("are listed with what they're for", () => {
+    const p = agentSystemPrompt();
+    for (const name of ["youtube-video-script.md", "social-post-batch.md", "client-check-in.md", "training-program.md"]) {
+      expect(p).toMatch(new RegExp(`- ${name.replace(".", "\\.")}: \\S`));
+    }
+    expect(p).toContain("- content-calendar.csv: spreadsheet with columns Date, Platform, Format, Topic, Hook, Status, Link");
   });
 });
 

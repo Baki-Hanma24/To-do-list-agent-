@@ -45,7 +45,9 @@ export interface TemplateInfo {
 export function listTemplates(): TemplateInfo[] {
   return listFiles("templates", (f) => TEMPLATE_NAME.test(f)).map((name) => {
     const body = read("templates", name);
-    const use = body.match(/<!--\s*Use for:\s*([\s\S]*?)-->/i)?.[1].trim() ?? "";
+    const note = body.match(/<!--\s*Use for:\s*([\s\S]*?)-->/i)?.[1].trim();
+    // CSV templates can't hold a comment: describe them by their columns.
+    const use = note ?? (name.endsWith(".csv") ? `spreadsheet with columns ${body.split(/\r?\n/)[0].split(",").join(", ")}` : "");
     return { name, use };
   });
 }
